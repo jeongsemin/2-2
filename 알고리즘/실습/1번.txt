@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#pragma warning(disable:4996)
+int rBinarysearch(int *arr, int l, int r, int key, int *cnt);
+
+int main()
+{
+   int n, key, *arr, result;
+   int cnt = 0;
+   scanf("%d %d", &n, &key);
+   arr = (int *)malloc(n * sizeof(int));
+   for (int i = 0;i < n;i++) {
+      scanf("%d", arr + i);
+   }
+   
+   result = rBinarysearch(arr, 0, n - 1, key, &cnt);
+   if(result == -1) {
+      printf(" %d X", cnt);
+   }
+   else {
+      printf(" %d %d",cnt, result);
+   }
+}
+int rBinarysearch(int *arr, int l, int r, int key, int *cnt)
+{
+   (*cnt)++;
+   int mid = (r + l) / 2;
+
+   if (r == l) {
+      if (arr[mid] == key)
+         return mid;
+      else
+         return -1;
+   }
+   if (arr[mid] == key) {
+      return mid;
+   }
+   else if(arr[mid] > key) {
+      return rBinarysearch(arr, l, mid - 1, key, cnt);
+   }
+   else {
+      return rBinarysearch(arr, mid + 1, r, key, cnt);
+   }
+}

@@ -1,0 +1,219 @@
+#include <stdio.h>
+#include <stdlib.h>
+#pragma warning(disable:4996)
+
+typedef struct tree {
+   struct tree *parent;
+   struct tree *right;
+   struct tree *left;
+   int key;
+}tree;
+
+typedef struct root {
+   tree *root;
+}treeroot;
+
+void insertitem(treeroot *bst, int k);
+int findElement(tree *root, int k);
+void firstsearch(tree *root);
+tree * searchNode(tree *root, int k);
+int isExternal(tree *root);
+void expandExternal(tree *root);
+int removeElement(treeroot *bst, int k);
+tree * sibling(tree *root);
+tree * inOrderSucc(tree *root);
+tree * reduceExternal(treeroot *bst, tree *root);
+
+int main()
+{
+   treeroot *bst = (treeroot *)malloc(sizeof(treeroot));
+   bst->root = NULL;
+   char command;
+   int key, check = 1;
+   int find;
+   while (1) {
+      scanf("%c", &command);
+      if (command == 'i') {
+         scanf("%d", &key);
+         insertitem(bst, key);
+      }
+      else if (command == 's') {
+         scanf("%d", &key);
+         if(bst->root == NULL)
+             printf(" X\n");
+         else{
+             find = findElement(bst->root, key);
+             if (find != NULL) {
+                printf(" %d\n", find);
+             }
+             else {
+                printf(" X\n");
+             }
+             
+         }
+      }
+      else if (command == 'q') {
+         if (bst->root == NULL)
+            break;
+         firstsearch(bst->root);
+         break;
+      }
+      getchar();
+   }
+}
+
+void expandExternal(tree *root)
+{
+   tree *newl = (tree *)malloc(sizeof(tree));
+   tree *newr = (tree *)malloc(sizeof(tree));
+   newl->left = NULL;
+   newl->right = NULL;
+   newl->parent = root;
+   newr->left = NULL;
+   newr->right = NULL;
+   newr->parent = root;
+   root->left = newl;
+   root->right = newr;
+}
+
+void insertitem(treeroot * bst, int k)
+{
+   if (bst->root == NULL) {
+      tree *new = (tree *)malloc(sizeof(tree));
+      new->key = k;
+      new->parent = NULL;
+      bst->root = new;
+      expandExternal(bst->root);
+   }
+   else {
+      tree *node = searchNode(bst->root, k);
+      if (node->parent->key > k) {
+         node->key = k;
+         expandExternal(node);
+      }
+      else {
+         node->key = k;
+         expandExternal(node);
+      }
+   }
+}
+
+tree * searchNode(tree * root, int k)
+{
+   tree *tmp;
+   tmp = root;
+   while (!isExternal(tmp)) {
+      if (tmp->key == k)
+         return tmp;
+      else if (tmp->key > k) {
+         tmp = tmp->left;
+      }
+      else {
+         tmp = tmp->right;
+      }
+   }
+   return tmp;
+}
+
+int removeElement(treeroot *bst, int k)
+{
+   tree *tmp;
+   tree *child, *des;
+   int result;
+   tmp = searchNode(bst->root, k);
+   if (isExternal(tmp)) {
+      return NULL;
+   }
+   result = tmp->key;
+   child = tmp->left;
+   if (!isExternal(child)) {
+      child = tmp->right;
+   }
+   if (isExternal(child)) {
+      reduceExternal(bst, child);
+   }
+   else {
+      des = inOrderSucc(tmp);
+      child = des->left;
+      tmp->key = des->key;
+      reduceExternal(bst, child);
+   }
+   return result;
+}
+
+tree * reduceExternal(treeroot *bst, tree *root)
+{
+   tree *par = root->parent;
+   tree *rsib = sibling(root);
+   if (par == bst->root) {
+      bst->root = rsib;
+      rsib->parent = NULL;
+      if (isExternal(rsib)) {
+         bst->root = NULL;
+      }
+   }
+   else {
+      tree *ppar = par->parent;
+      rsib->parent = ppar;
+      if (par == ppar->left) {
+         ppar->left = rsib;
+      }
+      else {
+         ppar->right = rsib;
+      }
+   }
+   free(root);
+   free(par);
+   return rsib;
+}
+
+void firstsearch(tree * root)
+{
+   if (isExternal(root))
+      return;
+   printf(" %d", root->key);
+   firstsearch(root->left);
+   firstsearch(root->right);
+}
+
+int findElement(tree * root, int k)
+{
+   tree *node = searchNode(root, k);
+   int result = NULL;
+   if (node != NULL && node->key == k)
+      result = node->key;
+
+   return result;
+}
+
+tree * inOrderSucc(tree *root)
+{
+   tree *tmp = root->right;
+   if (isExternal(tmp)) {
+      return NULL;
+   }
+   while (!isExternal(tmp->left)) {
+      tmp = tmp->left;
+   }
+   return tmp;
+}
+
+tree * sibling(tree *root)
+{
+   if (root->parent == NULL)
+      return NULL;
+   if (root->parent->left == root) {
+      return root->parent->right;
+   }
+   else {
+      return root->parent->left;
+   }
+}
+
+int isExternal(tree * root)
+{
+   if (root->right == NULL && root->left == NULL) {
+      return 1;
+   }
+   return 0;
+}

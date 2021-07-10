@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <stdlib.h>
+#pragma warning(disable:4996)
+
+char *L, *tmp;
+int size;
+
+void SortR(int l, int r);
+void SortG(int l, int r);
+void printList();
+int countR();
+int dcount();
+
+int main()
+{
+   scanf("%d", &size);
+   getchar();
+   L = (char*)malloc(size * sizeof(char));
+   tmp = (char*)malloc(size * sizeof(char));
+   for (int i = 0; i < size; i++) {
+      scanf("%c", L + i);
+      tmp[i] = L[i];
+   }
+   SortR(0, size - 1);
+   int rcount = countR();
+   SortG(rcount, size - 1);
+   int cnt = dcount();
+   printf(" %d", cnt);
+   return 0;
+}
+
+void SortR(int l, int r)
+{
+   char tmp;
+   while (l < r) {
+      if (L[l] == 'R') {
+         l++;
+      }
+      if (L[r] == 'G' || L[r] == 'B') {
+         r--;
+      }
+      if (l > r)
+         break;
+      if (L[l] != 'R' && L[r] == 'R') {
+         tmp = L[l];
+         L[l] = L[r];
+         L[r] = tmp;
+      }
+   }
+}
+
+void SortG(int l, int r)
+{
+   char tmp;
+   while (l < r) {
+      if (L[l] == 'G') {
+         l++;
+      }
+      if (L[r] == 'B') {
+         r--;
+      }
+      if (l > r)
+         break;
+      if (L[l] != 'G' && L[r] == 'G') {
+         tmp = L[l];
+         L[l] = L[r];
+         L[r] = tmp;
+      }
+   }
+}
+
+void printList()
+{
+   for (int i = 0; i < size; i++)
+      printf(" %c", tmp[i]);
+   printf("\n");
+}
+
+int countR() {
+   int cnt = 0;
+   for (int i = 0;i < size;i++) {
+      if (L[i] == 'R')
+         cnt++;
+   }
+   return cnt;
+}
+
+int dcount() {
+   int cnt = 0;
+   for (int i = 0;i < size;i++) {
+      if (L[i] == tmp[i])
+         cnt++;
+   }
+   return cnt;
+}

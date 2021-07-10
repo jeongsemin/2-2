@@ -1,0 +1,161 @@
+#include <stdio.h>
+#include <stdlib.h>
+#pragma warning(disable:4996)
+
+void insertItem(int key);
+void insertItemd(int key);
+int removeMax();
+int removeMin();
+void upHeap(int i);
+void upHeapd(int i);
+void downHeap(int i);
+void downHeapd(int i);
+void printHeap();
+void printheap();
+int *H, *h;
+int Hn = 0;
+int hn = 0;
+
+int main()
+{
+   int cnt, key;
+   int max, min;
+   scanf("%d", &cnt);
+   H = (int *)malloc(sizeof(int) * (cnt + 1));
+   h = (int *)malloc(sizeof(int) * (cnt + 1));
+   for (int i = 1;i < cnt + 1;i++) {
+      scanf("%d", &key);
+      insertItem(key);
+      insertItemd(key);
+   }
+   while (Hn != 0 && hn != 0) {
+      printHeap();
+      printheap();
+      max = removeMax();
+      min = removeMin();
+      printf("%d %d\n", max, min);
+   }
+   return 0;
+}
+
+void insertItem(int key)
+{
+   Hn++;
+   H[Hn] = key;
+   upHeap(Hn);
+}
+
+int removeMax()
+{
+   int key = H[1];
+   H[1] = H[Hn];
+   Hn--;
+   downHeap(1);
+   return key;
+}
+
+void upHeap(int i)
+{
+   int tmp;
+   int top = i / 2;
+   if (top > 0) {
+      if (H[top] < H[i]) {
+         tmp = H[top];
+         H[top] = H[i];
+         H[i] = tmp;
+      }
+      upHeap(top);
+   }
+}
+
+void downHeap(int i)
+{
+   int greater, tmp;
+   int left = 2 * i;
+   int right = 2 * i + 1;
+   if (left > Hn)
+      return;
+   greater = left;
+   if (right <= Hn) {
+      if (H[greater] < H[right])
+         greater = right;
+   }
+   if (H[i] < H[greater]) {
+      tmp = H[i];
+      H[i] = H[greater];
+      H[greater] = tmp;
+   }
+   else {
+      return;
+   }
+   downHeap(greater);
+}
+
+void printHeap()
+{
+   int i;
+   for (i = 1;i <= Hn;i++)
+      printf(" %d", H[i]);
+   printf("\n");
+}
+
+void insertItemd(int key)
+{
+   hn++;
+   h[hn] = key;
+   upHeapd(hn);
+}
+
+int removeMin()
+{
+   int key = h[1];
+   h[1] = h[hn];
+   hn--;
+   downHeapd(1);
+   return key;
+}
+
+void upHeapd(int i)
+{
+   int tmp;
+   int top = i / 2;
+   if (top > 0) {
+      if (h[top] > h[i]) {
+         tmp = h[top];
+         h[top] = h[i];
+         h[i] = tmp;
+      }
+      upHeapd(top);
+   }
+}
+
+void downHeapd(int i)
+{
+   int greater, tmp;
+   int left = 2 * i;
+   int right = 2 * i + 1;
+   if (left > hn)
+      return;
+   greater = left;
+   if (right <= hn) {
+      if (h[greater] > h[right])
+         greater = right;
+   }
+   if (h[i] > h[greater]) {
+      tmp = h[i];
+      h[i] = h[greater];
+      h[greater] = tmp;
+   }
+   else {
+      return;
+   }
+   downHeapd(greater);
+}
+
+void printheap()
+{
+   int i;
+   for (i = 1;i <= hn;i++)
+      printf(" %d", h[i]);
+   printf("\n");
+}
