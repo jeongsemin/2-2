@@ -1,0 +1,102 @@
+1번
+플랫폼 독립성
+운영체제나 하드웨어에 상관없이 자바 가상기계가 있으면 어디서나 자바로 설계된 프로그램에 동일한 실행 환경 제공
+실현 방식
+.java파일을 컴파일러가 .class파일로 만들고 링크과정 없이 자바 가상기계가 로딩하고 실행.
+
+2번
+
+
+
+
+3번
+기초형 : stack에 저장이 된다.
+참조형 : heap에 저장이 된다.
+
+
+4번
+import java.until.Scaneer
+public class Test{
+	public static void main(String []arg){
+		Scanner input  = new Scanner(System.in);
+		int a = input.nextInt();
+	}
+}
+
+5번
+float a = (float)10.0;
+int b = (int)(a/3);
+byte c = (byte)b;
+int d = (c>3)? 1:0;
+
+6번
+예측이 불가능하고 대체로 위험하기 때문이다.
+
+
+7번
+int [][]arr = new int[3][3];
+
+arr[0] = new int[1];
+arr[1] = new int[2];
+arr[2] = new int[3];
+
+
+8번
+int sum(int []arr)
+{
+	int out=0;
+	for(int i=0;i<arr.length;i++)
+		out+=arr[i];
+	
+	return out;
+}
+
+9번
+int getMax(int a,int b,int c)
+{
+	return a < b ? (b < c ? c : b) : (a < c ? c : a)
+}
+
+
+10번
+1. 캡슐화
+2. 상속
+3. 상속성
+
+
+11번
+Sejong
+
+
+12번
+int num -> static int num =1;
+static 메소드는 non-static 멤버 접근할 수 없음
+
+13번
+B: 11
+
+14번
+class Apple implements Edible
+{
+	@Override
+	public void eat()
+	{
+	   System.out.println("Eat Apple!");
+	}
+}
+
+15번
+class Parent{
+	void print(){
+		System.out.println("parent");
+	}
+}
+class Child extends Parent{
+	void print(){
+	 super.print();
+	 System.out.println("child");
+	}
+}
+
+
+

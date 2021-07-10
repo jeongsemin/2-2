@@ -1,0 +1,84 @@
+1번
+한정된 메모리를 효율적으로 사용하여 최고의 성능을 내기 위해
+
+2번
+JDK: java development Kiy
+컴파일의 역활을 담당하고 있다.
+JRE: java Runtime Enviroment
+인터프리터 즉 실행환경을 담당한다.
+
+3번
+안정성이 높다.
+유지보수가 용이하다.
+객체지향 언어다.
+
+4번
+다향성이란 하나의 메소드나 클래스가 있을때 이것을 다향한 방법으로 사용이 가능한 것을 말한다.
+그 예로 오버로딩,오버라이딩이 있다.
+
+class Calculator{
+	int sum(int a,int b) return a+b;
+	int sum(int a,int b,int c) return a+b+c;
+}
+5번
+하나의 메소드를 다양하게 사용하기 위해서
+중복되는 코드를 없애기 위해
+
+6번
+필요가 없어진 메모리를 없애는 것입니다.
+
+7번
+int []a = {5,6,7,8};
+int i=0;
+for(int num : a) {
+	a[i] = num * num;
+	i++;
+}
+8번
+1.
+public class Test{
+	2.
+	static void func()
+	{
+		System.out.println(123);
+	}
+	3.
+	public static void main(String []arg){
+		func();
+	}
+}
+
+9번
+class Car {
+ int index = 0;
+}
+class UseCar extends Car{
+ void func() {
+ Car [] c = new Car[10];
+ for(int i=0; i<10; i++)
+ c[i].index = i;
+}
+}
+index를 사용하려면 상속을 받아야 한다.
+
+10번
+자바는 Math 클래스를 패키지에 가지고 있기 때문입니다.
+
+11번
+안배움
+
+12번
+Integer
+
+13번
+오버로딩은 같은 공간안에서 같은 함수를 다양하게 사용하는 것을 말한다.
+오버라이딩은 상속받은 공간에서 같은 함수를 다양하게 사용하는 것을 말한다.
+
+14번
+부모 클래스에 있는 변수를 참조하겠다는 의미 입니다.
+
+15번
+부모 클래스에 찾아가서 함수를 검사하는 기능이 추가됩니다.
+부모 클래스에 같은 함수가 없다면 오류가 납니다.
+
+
